@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Recipe App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+        <% if current_user %>
+
+        <ul>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">Foods List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Recipies List</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link active" href="#">Public Recipies</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">General Shopping List</a>
+          </li>
+        </ul>
+
+        <% else %>
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link text-light" href="#">Public Recipes</a>
+            </li>
+        </ul>
+
+      <% end %>
+
+      <ul class="navbar-nav">
+        <% if current_user %>
+          <li class="nav-item"> <%= link_to "Edit Account", edit_user_registration_path %></li>
+          <li class="nav-item"> <%= button_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li class="nav-item"> <%= link_to "Sign Up", new_user_registration_path %></li>
+          <li class="nav-item"> <%= link_to "Sign In", new_user_session_path  %></li>
+        <% end %>
+      </ul>
+
+      </div>
+    </div>
+  </nav>
