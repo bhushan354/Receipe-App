@@ -5,7 +5,7 @@
 
   <div id="recipe-details-information">
     <div class="prepare-toggle">
-      <p>Preparation time: <b><%= @recipe.preparation_time_hours %> hours</b></p>
+      <p>Preparation time: <b><%= @recipe.preparation_time %> hours</b></p>
 
       <div>
         <% if @recipe.user == current_user %>
@@ -28,7 +28,7 @@
 
       </div>
     </div>
-    <p>Cooking time: <b><%= @recipe.cooking_time_hours %> hours</b></p>
+    <p>Cooking time: <b><%= @recipe.cooking_time %> hours</b></p>
     <hr style="margin-top: 10px; margin-bottom: 10px;">
     <p class="fs-5"><%= @recipe.description %></p>
   </div>
