@@ -1,0 +1,28 @@
+<div>
+    <%= link_to 'Add New Food', new_food_path %>
+    
+    <div>
+      <% if @foods.any? %>
+        <div class="table-all">
+          <p>Food Name</p>
+          <p>Measurement Unit</p>
+          <p>Unit Price</p>
+          <p>Quantity</p>
+          <p>Action</p>
+        </div>
+  
+        <% @foods.each do |food| %>
+          <div class="table-all-params">
+            <p><%= food.name %></p>
+            <p><%= food.measurement_unit %></p>
+            <p>$ <%= food.price %> </p>
+            <p><%= food.quantity %></p>
+            <%= button_to 'Delete Food', food_path(food.id), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" } %>
+          </div>
+        <% end %>
+      <% else %>
+        <h3>Click on Add new food to add foods here</h3>
+      <% end %>
+    </div>
+  </div>
+  
