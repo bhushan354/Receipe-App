@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+ .table-all {
+    display: flex;
+    gap: 30px;
+}
+
+.table-all-params {
+    display: flex;
+    gap: 90px;
+}
