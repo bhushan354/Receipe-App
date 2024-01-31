@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   get 'up' => 'rails/health#show', as: :rails_health_check
+
   authenticated :user do
     root 'foods#index', as: :authenticated_root
   end
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
     root 'home#index', as: :unauthenticated_root
   end
 
-resources :foods, except: [:update]
+resources :foods,  only: %i[index show new create destroy]
   resources :recipes, only: %i[index show new create destroy]
   # Defines the root path route ("/")
   # root "recipes#index"
