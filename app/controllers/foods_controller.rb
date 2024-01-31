@@ -23,6 +23,12 @@ class FoodsController < ApplicationController
     # when u access /foods/1, the 1 is the :id parameter.
         @food = Food.find(params[:id])
         @food.destroy
-        redirect_to foods_path,
+        redirect_to foods_path, notice: "Your Food is Deleted successfully"
+    end
+
+    private
+    
+    def food_params
+        params.require(:food).permit(:name, :measurement_unit, :price, :quantity)
     end
 end
