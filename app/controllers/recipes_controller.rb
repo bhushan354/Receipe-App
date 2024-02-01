@@ -38,6 +38,10 @@ class RecipesController < ApplicationController
     redirect_to request.referrer
   end
 
+  def show_public_recipes
+    @recipes = Recipe.where(public: true).order(id: :desc)
+  end
+
   private
 
   def recipe_params
