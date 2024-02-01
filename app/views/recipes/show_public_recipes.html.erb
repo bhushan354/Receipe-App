@@ -10,7 +10,11 @@
            </div>
         <% end %>
         <h5>Recipe By: <%= recipe.user.name %></h5>
-        <%= button_to 'Remove Recipe', recipe_path(recipe.id), method: :delete %>
+
+        <% if current_user && current_user == recipe.user %>
+            <%= button_to 'Remove', recipe_path(recipe.id), method: :delete %>
+            <% else %>
+        <% end %>
       </div>
 
 
