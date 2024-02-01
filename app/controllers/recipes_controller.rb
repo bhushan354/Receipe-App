@@ -1,22 +1,20 @@
 class RecipesController < ApplicationController
+  before_action :set_user, only: %i[index show new create]
+
   def index
-    @user = current_user
     @recipes = @user.recipes
   end
 
   def show
-    @user = current_user
     @recipe = Recipe.includes(recipe_foods: :food).find(params[:id])
     @recipe_foods = @recipe.recipe_foods
   end
 
   def new
-    @user = current_user
     @recipe = @user.recipes.new
   end
 
   def create
-    @user = current_user
     @recipe = @user.recipes.new(recipe_params)
 
     respond_to do |format|
@@ -35,7 +33,8 @@ class RecipesController < ApplicationController
     else
       flash[:alert] = 'Error deleting recipe.'
     end
-    redirect_to request.referrer
+
+    redirect_to recipes_path
   end
 
   def show_public_recipes
@@ -43,6 +42,10 @@ class RecipesController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = current_user
+  end
 
   def recipe_params
     params.require(:recipe).permit(:name, :cooking_time, :preparation_time, :description, :public)
