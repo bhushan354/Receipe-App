@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_user, only: %i[new create]
   before_action :set_recipe, only: %i[destroy show toggle_public]
-
+  load_and_authorize_resource
   def index
     @recipes = current_user.recipes
   end
@@ -12,7 +12,6 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = @user.recipes.build(recipe_params)
-
     if @recipe.save
       redirect_to recipes_path, notice: 'Recipe created successfuy'
     else
@@ -22,9 +21,7 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find(params[:id])
-
     @recipe.recipe_foods.destroy_all
-
     if @recipe.destroy
       redirect_to recipes_path, notice: 'Recipe was successfully destroyed.'
     else
@@ -52,7 +49,7 @@ class RecipesController < ApplicationController
   end
 
   def set_recipe
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.includes(:recipe_foods).find(params[:id])
   end
 
   def recipe_params

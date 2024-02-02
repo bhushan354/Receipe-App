@@ -1,19 +1,19 @@
 <div class="col-md-8">
   <h1 class="text-center"><%= @recipe.name %></h1>
     <%= form_with(model: @recipe, url: toggle_public_recipe_path(@recipe), method: :patch) do |form| %>
-    <%= form.button @recipe.public ? 'Make Private' : 'Make Public', class: 'btn btn-primary btn-sm float-end' %>
-  <% end %>  
+    <% if current_user == @recipe.user %>
+      <%= form.button @recipe.public ? 'Private' : 'Public', class: 'btn btn-primary btn-sm float-end' %>
+      <% end %>
+    <% end %>
   <p><strong>Preparation Time:</strong> <%= @recipe.preparation_time %> <%= "hour".pluralize(@recipe.preparation_time) %></p>
   <p><strong>Cooking Time:</strong> <%= @recipe.cooking_time  %> <%= "hour".pluralize(@recipe.cooking_time) %></p>
   <p><strong>State of Public:</strong> <%= @recipe.public %></p>
   <p><%= @recipe.description%> </p>
-
-  <%= link_to 'Generate Shopping List', recipes_path, class: 'btn btn-primary' %>
   <% if current_user == @recipe.user %>
-    <%= link_to 'Add Ingredient', new_recipe_recipe_food_path(@recipe.id) , class: 'btn btn-primary float-end' %>
+      <%= link_to 'Generate Shopping List', recipes_path, class: 'btn btn-primary' %>
+      <%= link_to 'Add Ingredient', new_recipe_recipe_food_path(@recipe.id) , class: 'btn btn-primary float-end' %>
   <% end %>
   <hr class="border border-success border-2 opacity-50">
-
 <table class="table table-striped">
   <thead class="table-dark">
     <tr>
@@ -24,7 +24,6 @@
     </tr>
   </thead>
   <tbody>
-
   <% @recipe_foods.each do |recipe_food| %>
     <tr>
       <td><%= recipe_food.food.name %></td>
@@ -33,7 +32,6 @@
       <td class="text-center">
         <%= button_to 'Remove', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: 'btn btn-danger float-start btn-sm' %>
         <%= link_to 'Modify', edit_recipe_recipe_food_path(@recipe, recipe_food), class: 'btn btn-info btn-sm' %>
-
       </td>
     </tr>
     <% end %>

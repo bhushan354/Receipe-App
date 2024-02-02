@@ -1,18 +1,17 @@
 <div class="col-md-6">
   <h2 class="text-light bg-dark mb-4 p-2">Public Recipes</h2>
   <hr class="border-light mb-4">
-
   <% @recipes.each do |recipe| %>
-    <div class="bg-dark text-light border rounded p-4 mb-3" style="background: linear-gradient(to right, #343a40, #343a40);">
-
+    <div class="bg-dark text-light border rounded p-4 mb-3" style="background: linear-gradient(to right, #343A40, #343A40);">
       <%= link_to recipe_path(recipe.id), class: 'text-light text-decoration-none' do %>
         <h2 class="mb-3"><%= recipe.name %></h2>
       <% end %>
-
       <h4 class="mb-3">by: <%= recipe.user.name %></h4>
-
+<% if can? :destroy, recipe %>
+  <% if current_user && current_user == recipe.user %>
       <%= button_to 'Remove Recipe', recipe_path(recipe.id), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: 'btn btn-danger btn-sm mb-3' %>
-
+  <% end %>
+<% end %>
       <div class="px-4">
         <p class="mb-2">Total Food Items: <%= recipe.recipe_foods.length %></p>
         <p>Total Price: $<%= recipe.recipe_foods.sum { |recipe_food| recipe_food.food.price * recipe_food.quantity } %></p>
