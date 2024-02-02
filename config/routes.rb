@@ -1,19 +1,24 @@
-# frozen_string_literal: true
-
 Rails.application.routes.draw do
   devise_for :users
-  
-  get 'up' => 'rails/health#show', as: :rails_health_check
 
-  # GET request to the '/public_recipes' path should be directed to the 'public_recipes' action in the 'recipes' controller
-  get '/public_recipes', to: 'recipes#show_public_recipes', as: :public_recipes_path
+    authenticated :user do
+      root 'foods#index', as: :authenticated_root
+    end
 
+    unauthenticated :user do
+      root 'home#index', as: :unauthenticated_root
+    end
 
-  resources :recipe_foods, only: %i[new create destroy edit update]
+  resources :foods, except: [:update]
+  resources :recipes do
+    member do
+      patch 'toggle_public'
+    end
+  resources :recipe_foods
+  end
 
-  resources :foods,  only: %i[index show new create destroy]
-  resources :recipes, only: %i[index show new create destroy] 
-   # Defines the root path route ("/")
-  root "foods#index"
-  # root "posts#index"
+  get 'public_recipes' => 'recipes#public_recipes', as: :public_recipes
+
+  get "up" => "rails/health#show", as: :rails_health_check
+
 end

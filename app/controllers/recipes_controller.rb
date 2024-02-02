@@ -1,53 +1,48 @@
 class RecipesController < ApplicationController
-  before_action :set_user, only: %i[index show new create]
-
   def index
-    @recipes = @user.recipes
-  end
-
-  def show
-    @recipe = Recipe.includes(recipe_foods: :food).find(params[:id])
-    @recipe_foods = @recipe.recipe_foods
+    @recipes = current_user.recipes
   end
 
   def new
-    @recipe = @user.recipes.new
+    @recipe = Recipe.new
+    @user = current_user
   end
 
   def create
-    @recipe = @user.recipes.new(recipe_params)
+    @recipes = current_user.recipes.build(recipe_params)
 
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @recipes.save
+      redirect_to recipes_path, notice: 'Food was successfully created.'
+    else
+      render :new
     end
   end
 
   def destroy
     @recipe = Recipe.find(params[:id])
-    if @recipe.destroy
-      flash[:notice] = 'Recipe deleted.'
-    else
-      flash[:alert] = 'Error deleting recipe.'
-    end
+    @recipe.destroy
 
-    redirect_to recipes_path
+    redirect_to recipes_path, notice: 'Recipe eliminated successfully.'
   end
 
-  def show_public_recipes
+  def show
+    @recipe = Recipe.find(params[:id])
+    @recipe_foods = @recipe.recipe_foods
+  end
+
+  def toggle_public
+    @recipe = Recipe.find(params[:id])
+    @recipe.update(public: !@recipe.public)
+    redirect_to @recipe, notice: 'Recipe updated successfully.'
+  end
+
+  def public_recipes
     @recipes = Recipe.where(public: true).order(id: :desc)
   end
 
   private
 
-  def set_user
-    @user = current_user
-  end
-
   def recipe_params
-    params.require(:recipe).permit(:name, :cooking_time, :preparation_time, :description, :public)
+    params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
   end
 end
