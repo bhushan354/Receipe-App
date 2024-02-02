@@ -22,7 +22,7 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find(params[:id])
-    
+
     @recipe.recipe_foods.destroy_all
 
     if @recipe.destroy
