@@ -8,9 +8,12 @@ Rails.application.routes.draw do
   # GET request to the '/public_recipes' path should be directed to the 'public_recipes' action in the 'recipes' controller
   get '/public_recipes', to: 'recipes#show_public_recipes', as: :public_recipes_path
 
+
+  resources :recipe_foods, only: %i[new create destroy edit update]
+
   resources :foods,  only: %i[index show new create destroy]
-  resources :recipes, only: %i[index show new create destroy]
-  # Defines the root path route ("/")
+  resources :recipes, only: %i[index show new create destroy] 
+   # Defines the root path route ("/")
   root "foods#index"
   # root "posts#index"
 end
