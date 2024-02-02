@@ -1,37 +1,35 @@
 class RecipesController < ApplicationController
+  before_action :set_user, only: %i[new create]
+  before_action :set_recipe, only: %i[destroy show toggle_public]
+
   def index
     @recipes = current_user.recipes
   end
 
   def new
     @recipe = Recipe.new
-    @user = current_user
   end
 
   def create
-    @recipes = current_user.recipes.build(recipe_params)
+    @recipe = @user.recipes.build(recipe_params)
 
-    if @recipes.save
-      redirect_to recipes_path, notice: 'Food was successfully created.'
+    if @recipe.save
+      redirect_to recipes_path, notice: 'Recipe created successfuy'
     else
       render :new
     end
   end
 
   def destroy
-    @recipe = Recipe.find(params[:id])
     @recipe.destroy
-
-    redirect_to recipes_path, notice: 'Recipe eliminated successfully.'
+    redirect_to recipes_path, notice: 'Recipe deleted successfully.'
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
     @recipe_foods = @recipe.recipe_foods
   end
 
   def toggle_public
-    @recipe = Recipe.find(params[:id])
     @recipe.update(public: !@recipe.public)
     redirect_to @recipe, notice: 'Recipe updated successfully.'
   end
@@ -41,6 +39,14 @@ class RecipesController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = current_user
+  end
+
+  def set_recipe
+    @recipe = Recipe.find(params[:id])
+  end
 
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
