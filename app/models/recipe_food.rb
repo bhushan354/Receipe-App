@@ -11,6 +11,6 @@ class RecipeFood < ApplicationRecord
     end
     price
   end
-  
+
   validates :quantity, presence: true
 end
