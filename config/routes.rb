@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   
   get 'up' => 'rails/health#show', as: :rails_health_check
 
+  # GET request to the '/public_recipes' path should be directed to the 'public_recipes' action in the 'recipes' controller
+  get '/public_recipes', to: 'recipes#show_public_recipes', as: :public_recipes_path
 
   resources :foods,  only: %i[index show new create destroy]
   resources :recipes, only: %i[index show new create destroy]
