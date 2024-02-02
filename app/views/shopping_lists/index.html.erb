@@ -1,0 +1,35 @@
+<div class="col-md-8 offset-md-2">
+  <h2 class="text-center">Shopping List Overview</h2>
+
+  <div id="shopping-info">
+    <div>
+      <% if @foods.length > 0 %>
+        <hp>Amount of food to buy: <%= @foods.length %> </hp>
+        <hp class="float-end me-5">Total food needed: $ <%= @total %> </hp>
+      <% else %>
+        <p class="text-center">Add food to generate the shopping list.</p>
+      <% end %>
+    </div>
+  </div>
+  <hr>
+  <% if @foods.length > 0 %>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Food</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @foods.each do |food| %>
+          <tr>
+            <td> <%= food.name %> </td>
+            <td> <%= food.quantity %>   <%= food.measurement_unit %> </td>
+            <td> $ <%= food.price %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
