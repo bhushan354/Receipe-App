@@ -1,11 +1,11 @@
 <div class="col-md-8 offset-md-2">
-  <h2 class="text-center">Shopping List</h2>
+  <h2 class="text-center">Shopping List Overview</h2>
 
   <div id="shopping-info">
     <div>
       <% if @foods.length > 0 %>
         <hp>Amount of food to buy: <%= @foods.length %> </hp>
-        <hp class="float-end me-5">Total value of food needed: $ <%= @total %> </hp>
+        <hp class="float-end me-5">Total food needed: $ <%= @total %> </hp>
       <% else %>
         <p class="text-center">Add food to generate the shopping list.</p>
       <% end %>
