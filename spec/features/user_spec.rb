@@ -55,7 +55,7 @@ RSpec.describe 'User', type: :feature do
       expect(page).to have_content('Forgot your password')
       expect(page).to have_content('Email')
     end
-end
+  end
 
   describe 'Sign Up Page' do
     it 'displays a welcoming sign-up page with a registration form' do

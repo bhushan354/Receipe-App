@@ -26,7 +26,6 @@ RSpec.describe 'Food', type: :feature do
       expect(page).to have_content('Orange')
     end
 
-
     it 'have a delete and edit button' do
       visit foods_path
       expect(page).to have_content('Edit Your Account')
