@@ -104,7 +104,7 @@ To run tests, run the following command:
 
 👤 **Malik Khan**
 
-- GitHub: [@bhushan354]([https://github.com/bhushan354](https://github.com/malikhaiderkhan))
+- GitHub: [malikhaiderkhan](https://github.com/malikhaiderkhan)
 
 
 ## 🔭 Future Features <a name="future-features"></a>
