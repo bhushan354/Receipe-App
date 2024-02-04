@@ -1,0 +1,60 @@
+<style>
+  .btn-dark-blue {
+    background: lightcoral;
+  }
+
+  .btn-dark-blue:hover {
+    background: linear-gradient(to right, #003366, #001f3f);
+    color: #ffffff;
+  }
+
+  .table-all, .table-all-params {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #001f3f;
+    margin-bottom: 5px;
+  }
+
+  .table-all {
+    background: linear-gradient(to right, #001f3f, #003366);
+    color: #ffffff;
+  }
+
+  .table-all-params {
+    background-color: #4484c4;
+    color: #ffffff;
+  }
+</style>
+
+<div class="container mt-5">
+  <%= link_to 'Add New Food', new_food_path, class: "btn btn-dark-blue mb-3" %>
+  
+  <div>
+    <% if @foods.any? %>
+      <div class="table-responsive">
+        <div class="table-all">
+          <p>Food Name</p>
+          <p>Measurement Unit</p>
+          <p>Unit Price</p>
+          <p>Quantity</p>
+          <p>Action</p>
+        </div>
+
+        <% @foods.each do |food| %>
+          <div class="table-all-params">
+            <p><%= food.name %></p>
+            <p><%= food.measurement_unit %></p>
+            <p>$ <%= food.price %> </p>
+            <p><%= food.quantity %></p>
+            <%= button_to 'Delete Food', food_path(food.id), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center">
+        <h3>Click on Add new food to add foods here</h3>
+      </div>
+    <% end %>
+  </div>
+</div>
